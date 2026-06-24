@@ -44,7 +44,8 @@ case "${1:-}" in
     Notification)
         input=$(cat)
         ntype=$(jq -r '.notification_type // empty' <<< "$input" 2>/dev/null) ||
-            ntype=$(grep -o '"notification_type" *: *"[^"]*"' <<< "$input" | head -1 | cut -d'"' -f4)
+            ntype=$(grep -o '"notification_type" *: *"[^"]*"' <<< "$input" | head -1 | cut -d'"' -f4) ||
+            ntype=""
         case "$ntype" in
             permission_prompt)
                 write_status "waiting"
