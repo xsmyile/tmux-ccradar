@@ -17,7 +17,7 @@ CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SETTINGS_FILE="${CCRADAR_SETTINGS_FILE:-$HOME/.claude/settings.json}"
 HOOK_COMMAND="$CURRENT_DIR/hook.sh"
 LEGACY_PATTERN='(tmux-ccradar|tmux-claude-status)/scripts/hook\.sh'
-EVENTS=(UserPromptSubmit PreToolUse Stop Notification)
+EVENTS=(SessionStart UserPromptSubmit PreToolUse Stop Notification)
 
 if ! command -v jq >/dev/null 2>&1; then
     echo "ccradar install-hooks: 'jq' is required to safely edit JSON settings but was not found." >&2

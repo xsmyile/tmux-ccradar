@@ -4,7 +4,7 @@
 #
 # Wire this into ~/.claude/settings.json (see README).
 # Called as: hook.sh <event_name>
-#   Events: UserPromptSubmit, PreToolUse, Stop, Notification
+#   Events: SessionStart, UserPromptSubmit, PreToolUse, Stop, Notification
 
 set -euo pipefail
 
@@ -28,6 +28,10 @@ PANE_ID=$(tmux display-message -p '#{pane_id}' 2>/dev/null) || { cat > /dev/null
 [ -z "$PANE_ID" ] && { cat > /dev/null; exit 0; }
 
 case "${1:-}" in
+    SessionStart)
+        cat > /dev/null
+        write_status "idle"
+        ;;
     PreToolUse)
         cat > /dev/null
         write_status "working"

@@ -40,6 +40,16 @@ Add this to `~/.claude/settings.json`:
 ```json
 {
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.config/tmux/plugins/tmux-ccradar/scripts/hook.sh SessionStart"
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [
@@ -90,7 +100,7 @@ Add this to `~/.claude/settings.json`:
 
 ```mermaid
 flowchart LR
-    hooks["Claude Code hooks<br/>UserPromptSubmit · PreToolUse<br/>Stop · Notification"]
+    hooks["Claude Code hooks<br/>SessionStart · UserPromptSubmit · PreToolUse<br/>Stop · Notification"]
     files["Per-pane status files<br/>~/.cache/tmux-ccradar/"]
     bar["tmux status bar<br/>✳ ●2 ◉1 ○0"]
     hooks -->|"hook.sh writes<br/>working · waiting · idle"| files
