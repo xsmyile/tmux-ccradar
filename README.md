@@ -111,8 +111,8 @@ set -g @claude-status-color-waiting "#f5a97f"   # orange (default)
 set -g @claude-status-color-idle    "#eed49f"   # yellow (default)
 set -g @claude-status-color-text    "#cad3f5"   # foreground (default)
 
-# Icon shown before the status (Nerd Font icon, emoji, or text)
-set -g @claude-status-icon "󰯉 "
+# Icon shown before the status (any Unicode glyph, Nerd Font icon, emoji, or text)
+set -g @claude-status-icon "✳ "   # default (plain Unicode, no Nerd Font needed)
 
 # Key binding for the sessions overview popup (default: C)
 set -g @claude-status-popup-key "C"
@@ -136,9 +136,9 @@ Press `prefix + C` (configurable via `@claude-status-popup-key`) to open a popup
   Claude Code Sessions
   ────────────────────────────────────────
 
-  ● %23  ~/dev/myapp              working
-  ◉ %47  ~/dev/api-server         waiting
-  ○ %12  ~/dev/tmux-plugin        idle
+  ● main:1       ~/dev/myapp           working
+  ◉ api:0        ~/dev/api-server      waiting
+  ○ work:2       ~/dev/tmux-plugin     idle
 
   3 sessions: 1 working · 1 waiting · 1 idle
 ```
