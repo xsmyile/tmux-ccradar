@@ -75,14 +75,13 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
 
 ## How it works
 
-```
-Claude Code hooks          Status files              tmux status bar
-┌──────────────┐   write   ┌────────────────────┐   read   ┌──────────┐
-│ UserPrompt   ├──────────>│ ~/.cache/           ├────────>│ 2 working│
-│ PreToolUse   │           │ tmux-ccradar/       │         │ 1 waiting│
-│ Stop         │           │ %42.status          │         │ 0 idle   │
-│ Notification │           └────────────────────┘         └──────────┘
-└──────────────┘
+```mermaid
+flowchart LR
+    hooks["Claude Code hooks<br/>UserPromptSubmit · PreToolUse<br/>Stop · Notification"]
+    files["Per-pane status files<br/>~/.cache/tmux-ccradar/"]
+    bar["tmux status bar<br/>✳ ●2 ◉1 ○0"]
+    hooks -->|"hook.sh writes<br/>working · waiting · idle"| files
+    files -->|"status.sh polls and counts"| bar
 ```
 
 1. Claude Code fires hook events as it works
