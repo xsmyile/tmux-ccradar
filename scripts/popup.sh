@@ -16,6 +16,11 @@ RESET='\033[0m'
 hooks_ok=""
 raw=$(tmux show-environment -g TMUX_CCRADAR_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
 
+working_ttl=""
+raw=$(tmux show-environment -g TMUX_CCRADAR_WORKING_TTL 2>/dev/null) && working_ttl="${raw#*=}"
+case "$working_ttl" in ''|*[!0-9]*) working_ttl="$CCRADAR_DEFAULT_WORKING_TTL" ;; esac
+now=$(date +%s)
+
 working_out=""
 waiting_out=""
 idle_out=""
@@ -29,12 +34,7 @@ while read -r pane_id; do
     [ -n "$pane_id" ] || continue
     status_file="$STATUS_DIR/${pane_id}.status"
 
-    if [ -f "$status_file" ]; then
-        status=$(<"$status_file") || status="idle"
-    else
-        status="idle"
-    fi
-    [ -n "$status" ] || status="idle"
+    status=$(effective_state "$status_file" "$working_ttl" "$now")
 
     label=$(tmux display-message -t "$pane_id" -p '#{session_name}:#{window_index}' 2>/dev/null) || label="$pane_id"
     [ -n "$label" ] || label="$pane_id"

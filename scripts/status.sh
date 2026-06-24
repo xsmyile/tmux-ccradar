@@ -17,6 +17,11 @@ raw=$(tmux show-environment -g TMUX_CCRADAR_COLOR_IDLE 2>/dev/null) && color_idl
 raw=$(tmux show-environment -g TMUX_CCRADAR_COLOR_TEXT 2>/dev/null) && color_text="${raw#*=}"
 raw=$(tmux show-environment -g TMUX_CCRADAR_ICON 2>/dev/null) && icon="${raw#*=}"
 
+working_ttl=""
+raw=$(tmux show-environment -g TMUX_CCRADAR_WORKING_TTL 2>/dev/null) && working_ttl="${raw#*=}"
+case "$working_ttl" in ''|*[!0-9]*) working_ttl="$CCRADAR_DEFAULT_WORKING_TTL" ;; esac
+now=$(date +%s)
+
 [ -z "$color_working" ] && color_working="#a6da95"
 [ -z "$color_waiting" ] && color_waiting="#f5a97f"
 [ -z "$color_idle" ] && color_idle="#eed49f"
@@ -34,7 +39,7 @@ while read -r pane_id; do
     status_file="$STATUS_DIR/${pane_id}.status"
     [ -f "$status_file" ] || continue
 
-    pane_status=$(<"$status_file") || continue
+    pane_status=$(effective_state "$status_file" "$working_ttl" "$now")
     total=$((total + 1))
     case "$pane_status" in
         working) working=$((working + 1)) ;;

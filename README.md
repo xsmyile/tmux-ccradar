@@ -128,9 +128,15 @@ set -g @ccradar-icon "✳ "   # default (plain Unicode, no Nerd Font needed)
 
 # Key binding for the sessions overview popup (default: C)
 set -g @ccradar-popup-key "C"
+
+# Treat a "working" session as idle if its status hasn't changed in this many
+# seconds (default: 1800 = 30 min; set 0 to disable)
+set -g @ccradar-working-ttl "1800"
 ```
 
 The default colors (green, orange, yellow, light grey) work with most themes and can be overridden to match yours.
+
+`@ccradar-working-ttl` guards against a session that gets stuck showing `working` — for example if Claude Code exits without firing its `Stop` hook, or the hooks become misconfigured. A `working` status older than the TTL is shown as `idle`. Lower it for snappier staleness detection, or set `0` to trust the hooks completely. Only `working` is aged out; `waiting` always persists, since it means a session needs your attention.
 
 ### Refresh rate
 

@@ -15,12 +15,21 @@ reject_tmux_format() {
     fi
 }
 
+sanitize_int() {
+    local value="$1" default="$2"
+    case "$value" in
+        ''|*[!0-9]*) echo "$default" ;;
+        *) echo "$value" ;;
+    esac
+}
+
 # Cache user options in tmux environment so status.sh avoids per-poll lookups
 tmux set-environment -g TMUX_CCRADAR_COLOR_WORKING "$(reject_tmux_format "$(get_tmux_option "@ccradar-color-working" "#a6da95")" "#a6da95")"
 tmux set-environment -g TMUX_CCRADAR_COLOR_WAITING "$(reject_tmux_format "$(get_tmux_option "@ccradar-color-waiting" "#f5a97f")" "#f5a97f")"
 tmux set-environment -g TMUX_CCRADAR_COLOR_IDLE "$(reject_tmux_format "$(get_tmux_option "@ccradar-color-idle" "#eed49f")" "#eed49f")"
 tmux set-environment -g TMUX_CCRADAR_COLOR_TEXT "$(reject_tmux_format "$(get_tmux_option "@ccradar-color-text" "#cad3f5")" "#cad3f5")"
 tmux set-environment -g TMUX_CCRADAR_ICON "$(reject_tmux_format "$(get_tmux_option "@ccradar-icon" "✳ ")" "✳ ")"
+tmux set-environment -g TMUX_CCRADAR_WORKING_TTL "$(sanitize_int "$(get_tmux_option "@ccradar-working-ttl" "$CCRADAR_DEFAULT_WORKING_TTL")" "$CCRADAR_DEFAULT_WORKING_TTL")"
 
 interpolate() {
     local option="$1"
