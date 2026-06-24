@@ -34,8 +34,8 @@ while read -r pane_id; do
     status_file="$STATUS_DIR/${pane_id}.status"
     [ -f "$status_file" ] || continue
 
+    pane_status=$(<"$status_file") || continue
     total=$((total + 1))
-    pane_status=$(<"$status_file")
     case "$pane_status" in
         working) working=$((working + 1)) ;;
         waiting) waiting=$((waiting + 1)) ;;
