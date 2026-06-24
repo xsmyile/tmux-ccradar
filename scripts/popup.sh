@@ -36,16 +36,24 @@ while read -r pane_id; do
     fi
     [ -n "$status" ] || status="idle"
 
+    label=$(tmux display-message -t "$pane_id" -p '#{session_name}:#{window_index}' 2>/dev/null) || label="$pane_id"
+    [ -n "$label" ] || label="$pane_id"
+
+    label_width=13
+    if [ "${#label}" -gt "$label_width" ]; then
+        label="${label:0:$((label_width - 1))}~"
+    fi
+
     pane_path=$(tmux display-message -t "$pane_id" -p '#{pane_current_path}' 2>/dev/null) || pane_path="?"
     path="${pane_path/#$HOME/\~}"
 
-    max_path=34
+    max_path=25
     if [ "${#path}" -gt "$max_path" ]; then
         trim=$((${#path} - max_path + 2))
         path="..${path:$trim}"
     fi
 
-    line=$(printf "%-4s %-${max_path}s %7s" "$pane_id" "$path" "$status")
+    line=$(printf "%-${label_width}s %-${max_path}s %7s" "$label" "$path" "$status")
 
     case "$status" in
         working)
