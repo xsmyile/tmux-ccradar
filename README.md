@@ -1,4 +1,4 @@
-# tmux-claude-status
+# tmux-ccradar
 
 A minimal, zero-dependency shell plugin that shows live [Claude Code](https://docs.anthropic.com/en/docs/claude-code) activity in your tmux status bar. See at a glance how many instances are working, waiting for input, or idle across all panes.
 
@@ -17,7 +17,7 @@ Requires [TPM](https://github.com/tmux-plugins/tpm).
 Add to `~/.config/tmux/tmux.conf` (or `~/.tmux.conf`):
 
 ```tmux
-set -g @plugin 'xsmyile/tmux-claude-status'
+set -g @plugin 'xsmyile/tmux-ccradar'
 ```
 
 Then press `prefix + I` to install.
@@ -34,7 +34,7 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
         "hooks": [
           {
             "type": "command",
-            "command": "~/.config/tmux/plugins/tmux-claude-status/scripts/hook.sh UserPromptSubmit"
+            "command": "~/.config/tmux/plugins/tmux-ccradar/scripts/hook.sh UserPromptSubmit"
           }
         ]
       }
@@ -44,7 +44,7 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
         "hooks": [
           {
             "type": "command",
-            "command": "~/.config/tmux/plugins/tmux-claude-status/scripts/hook.sh PreToolUse"
+            "command": "~/.config/tmux/plugins/tmux-ccradar/scripts/hook.sh PreToolUse"
           }
         ]
       }
@@ -54,7 +54,7 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
         "hooks": [
           {
             "type": "command",
-            "command": "~/.config/tmux/plugins/tmux-claude-status/scripts/hook.sh Stop"
+            "command": "~/.config/tmux/plugins/tmux-ccradar/scripts/hook.sh Stop"
           }
         ]
       }
@@ -64,7 +64,7 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
         "hooks": [
           {
             "type": "command",
-            "command": "~/.config/tmux/plugins/tmux-claude-status/scripts/hook.sh Notification"
+            "command": "~/.config/tmux/plugins/tmux-ccradar/scripts/hook.sh Notification"
           }
         ]
       }
@@ -79,7 +79,7 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
 Claude Code hooks          Status files              tmux status bar
 ┌──────────────┐   write   ┌────────────────────┐   read   ┌──────────┐
 │ UserPrompt   ├──────────>│ ~/.cache/           ├────────>│ 2 working│
-│ PreToolUse   │           │ tmux-claude-status/ │         │ 1 waiting│
+│ PreToolUse   │           │ tmux-ccradar/       │         │ 1 waiting│
 │ Stop         │           │ %42.status          │         │ 0 idle   │
 │ Notification │           └────────────────────┘         └──────────┘
 └──────────────┘
@@ -92,10 +92,10 @@ Claude Code hooks          Status files              tmux status bar
 
 ## Status bar placement
 
-By default the plugin appends to `status-right`. If you build your status bar manually (e.g. with catppuccin or a custom theme), use the `#{claude_status}` placeholder to control where it appears:
+By default the plugin appends to `status-right`. If you build your status bar manually (e.g. with catppuccin or a custom theme), use the `#{ccradar}` placeholder to control where it appears:
 
 ```tmux
-set -g status-right "#{claude_status} other-stuff"
+set -g status-right "#{ccradar} other-stuff"
 ```
 
 The plugin replaces the placeholder with the status output at load time.
@@ -106,16 +106,16 @@ All options are optional. Set them in `tmux.conf` **before** the TPM `run` line.
 
 ```tmux
 # Colors (any tmux-compatible color: hex, name, or terminal color number)
-set -g @claude-status-color-working "#a6da95"   # green (default)
-set -g @claude-status-color-waiting "#f5a97f"   # orange (default)
-set -g @claude-status-color-idle    "#eed49f"   # yellow (default)
-set -g @claude-status-color-text    "#cad3f5"   # foreground (default)
+set -g @ccradar-color-working "#a6da95"   # green (default)
+set -g @ccradar-color-waiting "#f5a97f"   # orange (default)
+set -g @ccradar-color-idle    "#eed49f"   # yellow (default)
+set -g @ccradar-color-text    "#cad3f5"   # foreground (default)
 
 # Icon shown before the status (any Unicode glyph, Nerd Font icon, emoji, or text)
-set -g @claude-status-icon "✳ "   # default (plain Unicode, no Nerd Font needed)
+set -g @ccradar-icon "✳ "   # default (plain Unicode, no Nerd Font needed)
 
 # Key binding for the sessions overview popup (default: C)
-set -g @claude-status-popup-key "C"
+set -g @ccradar-popup-key "C"
 ```
 
 The default colors (green, orange, yellow, light grey) work with most themes and can be overridden to match yours.
@@ -130,7 +130,7 @@ set -g status-interval 2
 
 ## Sessions overview popup
 
-Press `prefix + C` (configurable via `@claude-status-popup-key`) to open a popup window showing all active Claude Code sessions with their status and working directory.
+Press `prefix + C` (configurable via `@ccradar-popup-key`) to open a popup window showing all active Claude Code sessions with their status and working directory.
 
 ```
   Claude Code Sessions

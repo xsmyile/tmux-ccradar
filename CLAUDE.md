@@ -4,18 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A zero-dependency tmux plugin (TPM-compatible) that displays live Claude Code session activity in the tmux status bar. It tracks working/waiting/idle states across all panes using Claude Code hooks and per-pane status files stored in `~/.cache/tmux-claude-status/`.
+A zero-dependency tmux plugin (TPM-compatible) that displays live Claude Code session activity in the tmux status bar. It tracks working/waiting/idle states across all panes using Claude Code hooks and per-pane status files stored in `~/.cache/tmux-ccradar/`.
 
 ## Architecture
 
 The plugin has two data paths (sharing only `scripts/helpers.sh` for session detection):
 
-1. **Hook path** (write): Claude Code fires hook events → `scripts/hook.sh` writes a state (`working`, `waiting`, `idle`) to `~/.cache/tmux-claude-status/%<pane_id>.status`
-2. **Display path** (read): tmux polls `scripts/status.sh` every `status-interval` seconds → it iterates status files in `~/.cache/tmux-claude-status/`, cross-checks each against live panes, counts states, and emits tmux-formatted output with `#[fg=...]` color codes
+1. **Hook path** (write): Claude Code fires hook events → `scripts/hook.sh` writes a state (`working`, `waiting`, `idle`) to `~/.cache/tmux-ccradar/%<pane_id>.status`
+2. **Display path** (read): tmux polls `scripts/status.sh` every `status-interval` seconds → it iterates status files in `~/.cache/tmux-ccradar/`, cross-checks each against live panes, counts states, and emits tmux-formatted output with `#[fg=...]` color codes
 
-Entry point is `claude-status.tmux` which:
+Entry point is `ccradar.tmux` which:
 - Caches user options into tmux environment variables (avoids per-poll `show-option` calls)
-- Interpolates `#{claude_status}` placeholder in status-left/status-right, or appends to status-right as fallback
+- Interpolates `#{ccradar}` placeholder in status-left/status-right, or appends to status-right as fallback
 - Registers `session-closed` hook for cleanup and binds the popup key
 
 ### Scripts
@@ -35,10 +35,10 @@ There is no build step, test suite, or linter configured. All scripts are plain 
 
 ### Testing locally
 
-1. Symlink or clone to `~/.config/tmux/plugins/tmux-claude-status`
+1. Symlink or clone to `~/.config/tmux/plugins/tmux-ccradar`
 2. Add the hook configuration from README to `~/.claude/settings.json`
 3. Run `tmux source ~/.config/tmux/tmux.conf` to reload
-4. Verify with: `cat ~/.cache/tmux-claude-status/*.status`
+4. Verify with: `cat ~/.cache/tmux-ccradar/*.status`
 
 ### Shell conventions
 

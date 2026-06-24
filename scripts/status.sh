@@ -5,17 +5,17 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/helpers.sh"
 
-STATUS_DIR="$HOME/.cache/tmux-claude-status"
+STATUS_DIR="$HOME/.cache/tmux-ccradar"
 
 hooks_ok=""
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
 
 color_working="" color_waiting="" color_idle="" color_text="" icon=""
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_COLOR_WORKING 2>/dev/null) && color_working="${raw#*=}"
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_COLOR_WAITING 2>/dev/null) && color_waiting="${raw#*=}"
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_COLOR_IDLE 2>/dev/null) && color_idle="${raw#*=}"
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_COLOR_TEXT 2>/dev/null) && color_text="${raw#*=}"
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_ICON 2>/dev/null) && icon="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_COLOR_WORKING 2>/dev/null) && color_working="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_COLOR_WAITING 2>/dev/null) && color_waiting="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_COLOR_IDLE 2>/dev/null) && color_idle="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_COLOR_TEXT 2>/dev/null) && color_text="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_ICON 2>/dev/null) && icon="${raw#*=}"
 
 [ -z "$color_working" ] && color_working="#a6da95"
 [ -z "$color_waiting" ] && color_waiting="#f5a97f"

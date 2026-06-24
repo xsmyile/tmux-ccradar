@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-STATUS_DIR="$HOME/.cache/tmux-claude-status"
+STATUS_DIR="$HOME/.cache/tmux-ccradar"
 if [ ! -d "$STATUS_DIR" ]; then
     mkdir -p "$STATUS_DIR"
     chmod 700 "$STATUS_DIR"

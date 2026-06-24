@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/helpers.sh"
 
-STATUS_DIR="$HOME/.cache/tmux-claude-status"
+STATUS_DIR="$HOME/.cache/tmux-ccradar"
 
 GREEN='\033[32m'
 YELLOW='\033[33m'
@@ -14,7 +14,7 @@ DIM='\033[2m'
 RESET='\033[0m'
 
 hooks_ok=""
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
 
 working_out=""
 waiting_out=""
@@ -92,7 +92,7 @@ fi
 if [ "$hooks_ok" != "1" ] && [ "$total" -gt 0 ]; then
     echo ""
     printf '  %b⚠ Hooks not configured — status may be inaccurate%b\n' "$ORANGE" "$RESET"
-    printf '  %bSee: github.com/xsmyile/tmux-claude-status#setup%b\n' "$DIM" "$RESET"
+    printf '  %bSee: github.com/xsmyile/tmux-ccradar#setup%b\n' "$DIM" "$RESET"
 fi
 
 echo ""

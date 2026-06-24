@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/helpers.sh"
 
 hooks_ok=""
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_HOOKS_OK 2>/dev/null) && hooks_ok="${raw#*=}"
 
 # Count active Claude panes for exact popup height
 claude_panes=$(get_claude_panes)
@@ -30,7 +30,7 @@ fi
 
 # Border style
 border=""
-raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_POPUP_BORDER 2>/dev/null) && border="${raw#*=}"
+raw=$(tmux show-environment -g TMUX_CCRADAR_POPUP_BORDER 2>/dev/null) && border="${raw#*=}"
 
 if [ -n "$border" ]; then
     exec tmux display-popup -E -w 60 -h "$height" -b "$border" \
