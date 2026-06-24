@@ -21,7 +21,7 @@ raw=$(tmux show-environment -g TMUX_CLAUDE_STATUS_ICON 2>/dev/null) && icon="${r
 [ -z "$color_waiting" ] && color_waiting="#f5a97f"
 [ -z "$color_idle" ] && color_idle="#eed49f"
 [ -z "$color_text" ] && color_text="#cad3f5"
-[ -z "$icon" ] && icon="󰯉 "
+[ -z "$icon" ] && icon="✳ "
 
 total=0
 working=0
@@ -49,4 +49,4 @@ fi
 
 idle=$((total - working - waiting))
 
-echo "${icon}#[fg=${color_working}]${working}#[fg=${color_text}] working #[fg=${color_waiting}]${waiting}#[fg=${color_text}] waiting #[fg=${color_idle}]${idle}#[fg=${color_text}] idle"
+echo "${icon}#[fg=${color_working}]●#[fg=${color_text}]${working} #[fg=${color_waiting}]◉#[fg=${color_text}]${waiting} #[fg=${color_idle}]○#[fg=${color_text}]${idle}"
