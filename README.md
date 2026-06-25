@@ -30,7 +30,7 @@ The plugin tracks Claude Code activity via [hooks](https://docs.anthropic.com/en
 ~/.config/tmux/plugins/tmux-ccradar/scripts/install-hooks.sh
 ```
 
-It merges the four hook events without touching your other settings, backs up the previous file to `settings.json.bak`, and is safe to re-run (re-running an up-to-date file changes nothing). Requires [`jq`](https://jqlang.github.io/jq/). Restart any running Claude Code sessions afterwards.
+It merges the five hook events without touching your other settings, backs up the previous file to `settings.json.bak`, and is safe to re-run (re-running an up-to-date file changes nothing). Requires [`jq`](https://jqlang.github.io/jq/). Restart any running Claude Code sessions afterwards.
 
 <details>
 <summary>Manual setup (alternative)</summary>
